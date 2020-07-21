@@ -12,8 +12,22 @@
 <body>
     @include('layout.header')
 
-    @yield('content')
+    <div class="container">
+        <div class="row">
+            <div class="col s3">
+                @if(request()->route()->named('index'))
+                    @include('layout.sidebar')
+                @endif
+            </div>
+            <div class="col s6">
+                @yield('content')
+            </div>
+        </div>
+    </div>
 
     <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
+    <script>
+        M.AutoInit();
+    </script>
 </body>
 </html>

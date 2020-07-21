@@ -13,8 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'MainController@index')->name('index');
-Route::get('/tweets/{id}/edit', 'MainController@edit')->name('edit');
-Route::put('/tweets/{id}', 'MainController@update')->name('update');
-Route::post('/tweets', 'MainController@store')->name('store');
-Route::delete('/tweets/{id}', 'MainController@destroy')->name('destroy');
+Route::get('/', MainController::class.'@index')->name('index');
+Route::get('/tweets/{tweet}', MainController::class.'@show')->name('tweet.show');
+Route::get('/tweets/{tweet}/edit', MainController::class.'@edit')->name('tweet.edit');
+Route::put('/tweets/{tweet}', MainController::class.'@update')->name('tweet.update');
+Route::post('/tweets', MainController::class.'@store')->name('tweet.store');
+Route::delete('/tweets/{tweet}', MainController::class.'@destroy')->name('tweet.destroy');
+
+Route::post('/tweets/{tweet}/comments', MainController::class.'@storeComment')->name('tweet.comment.store');
+
+Route::post('/tags', MainController::class.'@storeTag')->name('tag.store');
