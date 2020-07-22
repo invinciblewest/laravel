@@ -10,31 +10,35 @@
                 @endforeach
                 <p><b>{{ $tweet->author->name }}</b>: {{ $tweet->text }}</p>
             </div>
-            <div class="card-action">
-                <a class="waves-effect waves-light btn-small" href="{{ route('tweet.edit', $tweet->id) }}">Edit</a>
-                <form method="post" style="display: inline" action="{{ route('tweet.destroy', $tweet->id) }}">
+            @auth
+                <div class="card-action">
+                    <a class="waves-effect waves-light btn-small" href="{{ route('tweet.edit', $tweet->id) }}">Edit</a>
+                    <form method="post" style="display: inline" action="{{ route('tweet.destroy', $tweet->id) }}">
+                        @csrf
+                        @method('delete')
+                        <button class="waves-effect waves-light btn-small red" type="submit">Delete</button>
+                    </form>
+                </div>
+            @endauth
+        </div>
+    </div>
+    @auth
+        <h4 class="header">Add comment</h4>
+        <div class="card horizontal">
+            <div class="card-stacked">
+                <form action="{{ route('tweet.comment.store', $tweet) }}" method="POST">
                     @csrf
-                    @method('delete')
-                    <button class="waves-effect waves-light btn-small red" type="submit">Delete</button>
+                    <div class="card-content">
+                        <textarea name="text" id="icon_prefix2" class="materialize-textarea">{{ old('text') }}</textarea>
+                        <label for="icon_prefix2">Comment</label>
+                    </div>
+                    <div class="card-action">
+                        <button type="submit" class="waves-effect waves-light btn-small">Send</button>
+                    </div>
                 </form>
             </div>
         </div>
-    </div>
-    <h4 class="header">Add comment</h4>
-    <div class="card horizontal">
-        <div class="card-stacked">
-            <form action="{{ route('tweet.comment.store', $tweet) }}" method="POST">
-                @csrf
-                <div class="card-content">
-                    <textarea name="text" id="icon_prefix2" class="materialize-textarea">{{ old('text') }}</textarea>
-                    <label for="icon_prefix2">Comment</label>
-                </div>
-                <div class="card-action">
-                    <button type="submit" class="waves-effect waves-light btn-small">Send</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    @endauth
     <h4 class="header">All comments</h4>
     @foreach($tweet->comments as $comment)
         <div class="card horizontal">

@@ -23,3 +23,7 @@ Route::delete('/tweets/{tweet}', MainController::class.'@destroy')->name('tweet.
 Route::post('/tweets/{tweet}/comments', MainController::class.'@storeComment')->name('tweet.comment.store');
 
 Route::post('/tags', MainController::class.'@storeTag')->name('tag.store');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

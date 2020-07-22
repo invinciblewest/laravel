@@ -6,6 +6,7 @@ use App\Comment;
 use App\Tag;
 use App\Tweet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MainController extends Controller
 {
@@ -23,7 +24,7 @@ class MainController extends Controller
 
         $tweet = Tweet::create([
             'text' => request()->text,
-            'author_id' => 1
+            'author_id' => Auth::user()->id
         ]);
 
         $tweet->tags()->attach(request()->tags);
@@ -65,7 +66,7 @@ class MainController extends Controller
         Comment::create([
             'tweet_id' => $tweet->id,
             'text' => request()->text,
-            'author_id' => 1//request()->author_id
+            'author_id' => Auth::user()->id
         ]);
 
         return redirect(route('tweet.show', $tweet->id));
